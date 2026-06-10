@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WORLD CUP 2026</title>
+  <link rel="stylesheet" href="wordcup.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Bebas+Neue&display=swap"
+    rel="stylesheet">
+  <style>
+    /* Comparison Bars */
+    .comp-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .comp-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .comp-label {
+      font-size: 0.75rem;
+      color: var(--gold-2);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .comp-flex {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .comp-side {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .comp-side.left {
+      justify-content: flex-end;
+    }
+
+    .comp-side.right {
+      justify-content: flex-start;
+    }
+
+    .comp-bar-bg {
+      flex: 1;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .comp-bar-fill {
+      height: 100%;
+      transition: width 1s ease-out;
+    }
+
+    .comp-side.left .comp-bar-fill {
+      position: absolute;
+      right: 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .comp-side.right .comp-bar-fill {
+      position: absolute;
+      left: 0;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .comp-num {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #fff;
+      width: 32px;
+      text-align: center;
+    }
+
+    .comp-win {
+      font-size: 0.7rem;
+      color: #fff;
+      opacity: 0.6;
+      text-align: center;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div
+    style="background:#000;padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:40px;font-family:'Cairo',sans-serif;direction:ltr;">
+
+    <div style="display:flex;align-items:center;gap:12px;">
+      <img src="pngegg.png" style="width:50px;height:50px;object-fit:contain;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:#fff;letter-spacing:2px;">FIFA WORLD CUP
+          2026™</div>
+        <div style="font-size:.72rem;color:#90a9ba;">11 June — 19 July 2026</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;align-items:center;">
+      <div style="text-align:center;">
+        <div id="days1" style="font-size:1.6rem;font-weight:900;color:#c9a84c;font-family:'Bebas Neue',sans-serif;">00
+        </div>
+        <div style="font-size:.65rem;color:#90a9ba;letter-spacing:1px;">DAYS</div>
+      </div>
+      <div style="text-align:center;">
+        <div id="hours1" style="font-size:1.6rem;font-weight:900;color:#c9a84c;font-family:'Bebas Neue',sans-serif;">00
+        </div>
+        <div style="font-size:.65rem;color:#90a9ba;letter-spacing:1px;">HRS</div>
+      </div>
+      <div style="text-align:center;">
+        <div id="mins1" style="font-size:1.6rem;font-weight:900;color:#c9a84c;font-family:'Bebas Neue',sans-serif;">00
+        </div>
+        <div style="font-size:.65rem;color:#90a9ba;letter-spacing:1px;">MINS</div>
+      </div>
+      <div style="text-align:center;">
+        <div id="secs1" style="font-size:1.6rem;font-weight:900;color:#c9a84c;font-family:'Bebas Neue',sans-serif;">00
+        </div>
+        <div style="font-size:.65rem;color:#90a9ba;letter-spacing:1px;">SECS</div>
+      </div>
+    </div>
+    <div id="userHeaderSection"></div>
+  </div>
+
+  <div class="app">
+    <div class="left-panel">
+      <div class="left-top-bar" style="justify-content:center;text-align:center">
+        <div>
+          <div class="wc-title-big">WORLD CUP 2026</div>
+          <div class="wc-subtitle"
+            style="display:inline-block;background:#c6f135;color:#000;padding:4px 14px;border-radius:999px;font-weight:900;font-size:.75rem;letter-spacing:2px;margin-top:6px;">
+            GROUP STAGE</div>
+        </div>
+        <div class="trophy-wrap">
+
+          <div class="trophy">
+            <img src="pngegg.png" style="width:70px;height:70px;object-fit:contain;">
+          </div>
+        </div>
+      </div>
+
+      <div id="groupsView">
+        <div class="section-title">دور المجموعات</div>
+        <div class="groups-grid" id="groupsGrid"></div>
+
+        <section id="teamLineupSection" class="team-lineup-section" aria-labelledby="teamLineupHeading">
+          <h2 class="section-title" id="teamLineupHeading">تشكيلة المنتخب</h2>
+          <div id="teamLineupSelectedName" class="tlu-selected-name" aria-live="polite"></div>
+
+          <div id="teamLineupRoot" class="team-lineup-root"></div>
+        </section>
+      </div>
+
+      <div class="knockout-view" id="knockoutView">
+        <div class="section-title">الأدوار الإقصائية</div>
+        <div id="koContent"></div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <div id="generatedMatchesInfo"
+          style="padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.02);font-size:.82rem;line-height:1.8;color:var(--text);">
+          <div class="section-title" style="margin-bottom:12px;">نظام كأس العالم 2026</div>
+          <div style="display:grid;gap:10px;color:var(--text);font-size:.84rem;line-height:1.8;">
+            <div><strong>48 منتخب</strong> موزعين على <strong>12 مجموعة من 4 فرق</strong>.</div>
+            <div><strong>أفضل فريقين</strong> من كل مجموعة يتأهلان تلقائياً.</div>
+            <div><strong>أفضل 8 فرق ثالثة</strong> تتأهل أيضاً.</div>
+            <div>هذا يُشكّل <strong>دور الـ 32</strong>، ثم دور الـ 16، ربع النهائي، نصف النهائي، مباراة الثالث
+              والنهائي.</div>
+            <div style="color:var(--muted);font-size:.76rem;">هذا الهيكل يتبع النظام الرسمي لبطولة FIFA كأس العالم 2026.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <div id="qualificationSummary"
+          style="padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.02);font-size:.82rem;line-height:1.8;color:var(--text);">
+          <div class="section-title" style="margin-bottom:12px;">إجمالي المباريات</div>
+          <div style="color:var(--text);font-size:.84rem;line-height:1.8;">
+            <div>إجمالي عدد المباريات في البطولة: <strong style="color:#c9a84c;font-size:1.1rem;">104 مباريات</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="right-panel">
+      <div class="matches-header">
+        <div class="wc-logo-small" style="justify-content:left">
+          <div></div>
+        </div>
+        <div class="date-nav-row">
+          <button class="nav-btn" id="nextBtn" type="button">&#8250;</button>
+          <div class="date-info" style="text-align:center;flex:1">
+            <div class="date-main" id="dayName"></div>
+            <div class="date-sub" id="dateFull" style="cursor:pointer;"
+              onclick="document.getElementById('datePicker').showPicker()">
+              <span id="dateFullText"></span>
+            </div>
+            <input type="date" id="datePicker" style="display:none;" min="2026-06-11" max="2026-07-19">
+          </div>
+          <button class="nav-btn" id="prevBtn" type="button">&#8249;</button>
+        </div>
+        <div class="phase-pill pill-group" id="phasePill">دور المجموعات</div>
+        <div class="sync-row">
+          <div class="sync-badge"><span class="dot-live"></span><span id="syncStatus"> </span></div>
+          <span id="lastSyncText"> </span>
+        </div>
+      </div>
+      <div class="matches-list" id="matchesList"></div>
+    </aside>
+  </div>
+
+  <div class="overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div class="modal-title" id="modalTitle"> توقّع النتيجة </div>
+        <button class="modal-close" type="button" id="closeModalBtn">✕</button>
+      </div>
+      <div class="modal-meta" id="modalMeta"></div>
+      <div class="modal-teams">
+        <div class="mt-team">
+          <img class="mt-flag" id="mf1" alt="">
+          <div class="mt-name" id="mn1"></div>
+          <div class="mt-rank" id="mr1"></div>
+        </div>
+        <div class="mt-vs">VS</div>
+        <div class="mt-team">
+          <img class="mt-flag" id="mf2" alt="">
+          <div class="mt-name" id="mn2"></div>
+          <div class="mt-rank" id="mr2"></div>
+        </div>
+      </div>
+      <div class="pred-label">— اختر توقعك —</div>
+      <div class="pred-opts">
+        <button class="pred-opt" id="po1" type="button"></button>
+        <button class="pred-opt" id="po2" type="button">تعادل<br>X</button>
+        <button class="pred-opt" id="po3" type="button"></button>
+      </div>
+
+      <button class="modal-cta" id="modalCta" type="button" disabled>عرض التحليل والتوقع</button>
+    </div>
+  </div>
+
+  <div class="result-page" id="resultPage">
+    <div class="rp-inner">
+      <div class="rp-top-row">
+        <button class="rp-back" id="backToMatchesBtn" type="button">← العودة للمباريات</button>
+
+      </div>
+      <div class="rp-matchup">
+        <div class="rp-team">
+          <img class="rp-flag" id="rpF1" alt="">
+          <div class="rp-tname" id="rpN1"></div>
+          <div class="rp-team-meta" id="rpMeta1"></div>
+          <div class="rp-team-rating" id="rpTeamRating1" aria-label="تقييم المنتخب"></div>
+        </div>
+        <div class="rp-vs-block">
+          <div class="rp-vs">VS</div>
+          <div class="rp-match-info" id="rpInfo"></div>
+        </div>
+        <div class="rp-team">
+          <img class="rp-flag" id="rpF2" alt="">
+          <div class="rp-tname" id="rpN2"></div>
+          <div class="rp-team-meta" id="rpMeta2"></div>
+          <div class="rp-team-rating" id="rpTeamRating2" aria-label="تقييم المنتخب"></div>
+        </div>
+      </div>
+
+      <div id="lineupSection" class="result-lineups-panel" style="display:none;">
+        <div class="block-title">التشكيلة</div>
+        <div id="lineupContent" class="result-lineups-grid"></div>
+      </div>
+
+
+
+
+      <div id="resultContent">
+        <div class="loading-state">
+          <div class="loading-block">
+            <div class="spinner"></div>
+            <div>جاري التحميل...</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FIXED BOTTOM-LEFT AUTO-PREDICT BUTTON -->
+  <button id="autoSimBtn" style="position:fixed; bottom:24px; left:24px; z-index:999;
+         background:#C9A84C; color:#000; border:none; border-radius:8px;
+         padding:12px 20px; font-weight:700; font-size:14px; cursor:pointer;
+         font-family:'Cairo', sans-serif; box-shadow:0 8px 24px rgba(0,0,0,0.5);">
+    توقع تلقائي لكل المجموعات
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="teams_lineup_data.js"></script>
+  <script src="wordcup.js"></script>
+</body>
+
+</html>
