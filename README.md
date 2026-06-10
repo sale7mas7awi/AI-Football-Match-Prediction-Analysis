@@ -262,10 +262,9 @@ This project provided practical experience in:
 
 ## Author
 
-Saleh Nour Al-Din
+Saleh Nour Al-Deen
 
 Data Science & Artificial Intelligence
 
-Al al-Bayt University
 
 Graduation Project – 2026
